@@ -4,6 +4,7 @@ import IndustriesSection from "@/Components/IndustriesSection";
 import PartnersMarquee from "@/Components/PartnersMarquee";
 import WhatWeOffer from "@/Components/WhatWeOffer";
 import aboutImg from './../public/images/laptop-code.webp';
+import TechnologiesSection from "@/Components/Technologies";
 export default function Home() {
    const stats = [
     {
@@ -32,6 +33,7 @@ export default function Home() {
     <WhatWeOffer/>
     <IndustriesSection/>
     <AboutSection aboutImg={aboutImg} />   
+    <TechnologiesSection/>
 
      </>
   );
