@@ -12,11 +12,11 @@ const techData = [
     groups: [
       {
         name: "iOS",
-        techs: ["Swift", "UI Kit", "RxSwift", "Swift Combine", "MVVM", "Alamofire", "Core Data"]
+        techs: ["Swift", "Ui kit", "Rxswift", "Swift combine", "Mvm", "Alamofire", "Core data"]
       },
       {
         name: "Android",
-        techs: ["Kotlin", "MVVM", "Java", "RxJava", "Retrofit", "Jetpack"]
+        techs: ["Kotline", "Mvvm", "Java", "Rxjava", "Retrofit", "Jetpack"]
       }
     ]
   },
@@ -40,7 +40,7 @@ const techData = [
       }
     ]
   },
-  {
+  { 
     id: "cross",
     label: "Cross Platform",
     title: "Cross-Platform Solutions",

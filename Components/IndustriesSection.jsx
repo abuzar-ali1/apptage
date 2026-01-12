@@ -100,7 +100,6 @@ export default function IndustriesSection() {
               <div className="w-11 h-11 rounded-full bg-[#EFEEFF] flex items-center justify-center text-[#6D3CFF] group-hover:bg-[#6D3CFF] group-hover:text-white transition-all duration-300 ease-out shadow-sm">
                 {industry.icon}
               </div>
-              
               {/* Name */}
               <span className="text-gray-700 text-lg font-medium group-hover:text-[#6D3CFF] transition-colors duration-300">
                 {industry.name}
