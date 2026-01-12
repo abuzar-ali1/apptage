@@ -1,382 +1,438 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { FiArrowRight, FiCheckCircle, FiChevronRight } from "react-icons/fi";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 
 export default function WhatWeOffer() {
   const [activeCard, setActiveCard] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
   const sectionRef = useRef(null);
+  const rightColumnRef = useRef(null);
   const cardsRef = useRef([]);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
+  
+  // Smooth scroll progress using motion value
+  const scrollYProgress = useMotionValue(0);
+  const smoothScrollProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    mass: 0.5
   });
 
-  // Parallax effects for cards
-  const card1Y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const card2Y = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  // Parallax transforms for cards - smoother values
+  const cardY1 = useTransform(smoothScrollProgress, [0, 0.2, 1], [0, 15, 44.5]);
+  const cardY2 = useTransform(smoothScrollProgress, [0.2, 0.4, 1], [0, 10, 0]);
+  const cardY3 = useTransform(smoothScrollProgress, [0.4, 0.6, 1], [0, 15, 0]);
+  const cardY4 = useTransform(smoothScrollProgress, [0.6, 0.8, 1], [0, 20, 80]);
+  const cardY5 = useTransform(smoothScrollProgress, [0.8, 0.9, 1], [0, 25, 60]);
+  const cardY6 = useTransform(smoothScrollProgress, [0.9, 1], [0, 30]);
   
-  // Scale effect for cards
-  const cardScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
+  const cardYTransforms = [cardY1, cardY2, cardY3, cardY4, cardY5, cardY6];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const fadeInLeft = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const fadeInRight = {
-    hidden: { opacity: 0, x: 30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const listItemVariants = {
-    hidden: { opacity: 0, x: -10 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.3
-      }
-    }
-  };
-
-  // Card data
+  // Card data matching the HTML structure
   const cards = [
     {
       id: 1,
       title: "Advisory & Design",
       description: "Bringing your ideas to life with intuitive design, powerful branding, and user-centered experiences.",
       features: ["Advisory", "Design"],
-      primaryButton: "Schedule A Call",
+      icon: "/img/home/services/service-2.png",
+      primaryButton: "Schedule a Call",
       secondaryButton: "Learn More",
-      color: "from-blue-500 to-purple-500",
-      icon: "🎯"
+      secondaryLink: "/development/app-development/"
     },
     {
       id: 2,
       title: "Development Services",
       description: "Building robust, scalable digital solutions from mobile apps to custom web platforms and everything in between.",
       features: ["App Development", "Custom Software Development", "Web Development", "Game Development"],
-      primaryButton: "Schedule A Call",
+      icon: "/img/home/services/service-3.png",
+      primaryButton: "Schedule a Call",
       secondaryButton: "Learn More",
-      color: "from-purple-500 to-pink-500",
-      icon: "💻"
+      secondaryLink: "/development/app-development/"
+    },
+    {
+      id: 3,
+      title: "Ecommerce Solutions",
+      description: "Optimizing your eCommerce platform with tailored designs, development, and integrations to maximize growth.",
+      features: ["Shopify", "Magento", "Custom Ecommerce Solutions", "BigCommerce", "WooCommerce"],
+      icon: "/img/home/services/service-4.png",
+      primaryButton: "Schedule a Call",
+      secondaryButton: "Learn More",
+      secondaryLink: "/development/app-development/"
+    },
+    {
+      id: 4,
+      title: "Data & Cloud Services",
+      description: "Enabling smarter business decisions with data-driven insights, cloud migration, and scalable infrastructure.",
+      features: ["Cloud Consulting & Services", "Data Solutions"],
+      icon: "/img/home/services/service-5.png",
+      primaryButton: "Schedule a Call",
+      secondaryButton: "Learn More",
+      secondaryLink: "/development/app-development/"
+    },
+    {
+      id: 5,
+      title: "AI & ML Solutions",
+      description: "Implementing cutting-edge artificial intelligence and machine learning solutions for your business.",
+      features: ["Machine Learning", "Computer Vision", "Natural Language Processing", "Predictive Analytics"],
+      icon: "/img/home/services/service-2.png",
+      primaryButton: "Schedule a Call",
+      secondaryButton: "Learn More",
+      secondaryLink: "/development/app-development/"
+    },
+    {
+      id: 6,
+      title: "DevOps & Cloud",
+      description: "Providing cloud infrastructure and DevOps services for scalable, secure, and reliable deployments.",
+      features: ["AWS/Azure/GCP", "CI/CD Pipelines", "Containerization", "Infrastructure as Code"],
+      icon: "/img/home/services/service-3.png",
+      primaryButton: "Schedule a Call",
+      secondaryButton: "Learn More",
+      secondaryLink: "/development/app-development/"
     }
   ];
 
-  // Handle card visibility
+  // Handle wheel scroll for entire component
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const cardId = parseInt(entry.target.dataset.id);
-            setActiveCard(cardId);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
+    const section = sectionRef.current;
+    const rightColumn = rightColumnRef.current;
+    
+    if (!section || !rightColumn) return;
 
-    cardsRef.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
+    const handleWheel = (e) => {
+      e.preventDefault();
+      
+      // Calculate scroll amount with smooth factor
+      const scrollAmount = e.deltaY * 0.5;
+      const newScrollTop = rightColumn.scrollTop + scrollAmount;
+      const maxScrollTop = rightColumn.scrollHeight - rightColumn.clientHeight;
+      
+      // Bound the scroll position
+      const boundedScrollTop = Math.max(0, Math.min(maxScrollTop, newScrollTop));
+      
+      // Update right column scroll position smoothly
+      rightColumn.scrollTo({
+        top: boundedScrollTop,
+        behavior: 'smooth'
+      });
+      
+      // Update scroll progress
+      const progress = boundedScrollTop / maxScrollTop;
+      scrollYProgress.set(progress);
+      
+      // Update active card
+      updateActiveCard(boundedScrollTop, rightColumn);
+    };
+
+    const handleTouchStart = (e) => {
+      const touch = e.touches[0];
+      touchStartY.current = touch.clientY;
+    };
+
+    const handleTouchMove = (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const deltaY = touchStartY.current - touch.clientY;
+      const rightColumn = rightColumnRef.current;
+      
+      if (rightColumn) {
+        rightColumn.scrollTop += deltaY * 1.5;
+        touchStartY.current = touch.clientY;
+        
+        // Update scroll progress
+        const maxScrollTop = rightColumn.scrollHeight - rightColumn.clientHeight;
+        const progress = rightColumn.scrollTop / maxScrollTop;
+        scrollYProgress.set(progress);
+        
+        updateActiveCard(rightColumn.scrollTop, rightColumn);
+      }
+    };
+
+    const touchStartY = { current: 0 };
+
+    // Add event listeners
+    section.addEventListener('wheel', handleWheel, { passive: false });
+    section.addEventListener('touchstart', handleTouchStart, { passive: true });
+    section.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    // Initialize scroll progress
+    const maxScrollTop = rightColumn.scrollHeight - rightColumn.clientHeight;
+    const initialProgress = rightColumn.scrollTop / maxScrollTop;
+    scrollYProgress.set(initialProgress);
 
     return () => {
-      cardsRef.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
+      section.removeEventListener('wheel', handleWheel);
+      section.removeEventListener('touchstart', handleTouchStart);
+      section.removeEventListener('touchmove', handleTouchMove);
     };
-  }, []);
+  }, [scrollYProgress]);
+
+  // Function to update active card
+  const updateActiveCard = (scrollTop, container) => {
+    const cardElements = cardsRef.current;
+    
+    for (let i = 0; i < cardElements.length; i++) {
+      if (cardElements[i]) {
+        const card = cardElements[i];
+        const cardTop = card.offsetTop;
+        const cardHeight = card.clientHeight;
+        const scrollPosition = scrollTop + container.clientHeight / 3;
+        
+        if (scrollPosition >= cardTop && scrollPosition < cardTop + cardHeight) {
+          setActiveCard(cards[i].id);
+          break;
+        }
+      }
+    }
+  };
+
+  // Handle card click to scroll to it
+  const scrollToCard = (index) => {
+    const rightColumn = rightColumnRef.current;
+    const cardElement = cardsRef.current[index];
+    
+    if (rightColumn && cardElement) {
+      setIsScrolling(true);
+      
+      const cardTop = cardElement.offsetTop;
+      const containerHeight = rightColumn.clientHeight;
+      const scrollTo = cardTop - (containerHeight / 2) + (cardElement.clientHeight / 2);
+      
+      rightColumn.scrollTo({
+        top: scrollTo,
+        behavior: 'smooth'
+      });
+      
+      setActiveCard(cards[index].id);
+      
+      setTimeout(() => setIsScrolling(false), 500);
+    }
+  };
 
   return (
     <section 
-      ref={sectionRef} 
-      className="relative min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 py-16 md:py-24 lg:py-32 overflow-hidden"
+      ref={sectionRef}
+      className="bg-[#1A1239] px-6 2xl:px-0 py-40 min-h-screen overflow-hidden"
     >
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-0 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16"
-        >
-          {/* Left Column - Sticky Content */}
-          <motion.div 
-            variants={fadeInLeft}
-            className="sticky top-24 self-start"
-          >
-            <div className="space-y-8">
-              {/* Section Label */}
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-[#6D3CFF] rounded-full animate-pulse"></div>
-                <span className="text-[#6D3CFF] font-semibold text-sm uppercase tracking-wider">
-                  What We Offer
-                </span>
-              </div>
-
-              {/* Main Title */}
-              <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
-                Tailored Digital Solutions to Fuel Your Success
-              </h2>
-
-              {/* Description */}
-              <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                At Apptage, we bring strategy, design, and technology together to craft solutions that deliver measurable impact. Whether you're scaling your business, launching a new product, or optimizing existing systems, we provide custom solutions built to grow with your business.
-              </p>
-
-              {/* Primary CTA Button */}
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                className="group inline-flex items-center justify-center px-8 py-4 bg-[#6D3CFF] text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#6D3CFF]/30"
-              >
-                Book A Call
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="ml-3"
-                >
-                  <FiArrowRight className="w-5 h-5" />
-                </motion.span>
-              </motion.button>
-
-              {/* Stats Mini (optional) */}
-              <div className="pt-8 border-t border-gray-200">
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#6D3CFF]">24/7</div>
-                    <div className="text-sm text-gray-600">Support</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#6D3CFF]">100%</div>
-                    <div className="text-sm text-gray-600">Client Satisfaction</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#6D3CFF]">10+</div>
-                    <div className="text-sm text-gray-600">Years Experience</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column - Scrollable Cards */}
-          <div className="space-y-8 lg:space-y-12">
-            {cards.map((card, index) => (
-              <motion.div
-                key={card.id}
-                ref={el => cardsRef.current[index] = el}
-                data-id={card.id}
-                variants={cardVariants}
-                style={{
-                  y: index === 0 ? card1Y : card2Y,
-                  scale: cardScale
-                }}
-                whileHover={{ 
-                  y: -10,
-                  transition: { duration: 0.2 }
-                }}
-                className="relative group"
-              >
-                {/* Card Container */}
-                <div className={`relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden ${
-                  activeCard === card.id ? 'ring-2 ring-[#6D3CFF] ring-opacity-50' : ''
-                }`}>
-                  {/* Card Header */}
-                  <div className="p-8">
-                    {/* Card Icon and Title */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div>
-                        <div className="flex items-center space-x-4 mb-4">
-                          <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center text-2xl`}>
-                            {card.icon}
-                          </div>
-                          <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
-                            {card.title}
-                          </h3>
-                        </div>
-                        
-                        {/* Description */}
-                        <p className="text-gray-600 text-lg mb-6">
-                          {card.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Features List */}
-                    <div className={`grid ${
-                      card.features.length > 2 ? 'grid-cols-2' : 'grid-cols-1'
-                    } gap-4 mb-8`}>
-                      {card.features.map((feature, idx) => (
-                        <motion.div
-                          key={idx}
-                          variants={listItemVariants}
-                          custom={idx}
-                          className="flex items-center space-x-3"
-                        >
-                          <div className="w-2 h-2 rounded-full bg-[#6D3CFF]"></div>
-                          <span className="text-gray-700 font-medium">{feature}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    {/* Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="flex-1 flex items-center justify-center px-6 py-3 bg-[#6D3CFF] text-white rounded-lg font-semibold hover:bg-[#4d22e0] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#6D3CFF] focus:ring-offset-2"
-                      >
-                        {card.primaryButton}
-                        <FiChevronRight className="ml-2" />
-                      </motion.button>
-                      
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="flex-1 flex items-center justify-center px-6 py-3 bg-white text-[#6D3CFF] border-2 border-[#6D3CFF] rounded-lg font-semibold hover:bg-[#6D3CFF] hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#6D3CFF] focus:ring-offset-2"
-                      >
-                        {card.secondaryButton}
-                      </motion.button>
-                    </div>
-                  </div>
-
-                  {/* Card Background Pattern */}
-                  <div className="absolute top-0 right-0 w-64 h-64 -translate-y-32 translate-x-32 opacity-5">
-                    <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-500 rounded-full"></div>
-                  </div>
-
-                  {/* Active Indicator */}
-                  {activeCard === card.id && (
-                    <motion.div
-                      layoutId="activeCard"
-                      className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#6D3CFF] to-purple-400"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  )}
-                </div>
-
-                {/* Connection Line between Cards (desktop only) */}
-                {index < cards.length - 1 && (
-                  <div className="hidden lg:block absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-gradient-to-b from-[#6D3CFF] to-transparent"></div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Additional Services Grid (optional, shown in image) */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-16 lg:mt-24"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: "Mobile Apps", description: "iOS & Android development" },
-              { title: "Web Platforms", description: "Custom web applications" },
-              { title: "UI/UX Design", description: "User-centered design" },
-              { title: "AI Solutions", description: "Machine learning integration" }
-            ].map((service, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ y: -5 }}
-                className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#6D3CFF]/10 flex items-center justify-center">
-                    <FiCheckCircle className="w-5 h-5 text-[#6D3CFF]" />
-                  </div>
-                  <h4 className="font-semibold text-gray-900">{service.title}</h4>
-                </div>
-                <p className="text-gray-600 text-sm">{service.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Scroll Indicator (desktop only) */}
-      <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 z-10">
-        <div className="flex flex-col items-center space-y-4">
-          {cards.map((card, index) => (
-            <button
-              key={card.id}
-              onClick={() => {
-                const element = cardsRef.current[index];
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+      <div className="container mx-auto grid xl:grid-cols-2 gap-12 items-start">
+        
+        {/* Left Column - Sticky Content */}
+        <div className="xl:sticky top-40 2xl:top-80 self-start">
+          <div className="flex items-center gap-3 mb-6">
+            <motion.div 
+              className="w-3 h-3 bg-[#6D3CFF] rounded-full"
+              animate={{
+                scale: [1, 1.2, 1],
+                boxShadow: [
+                  "0 0 0 0 rgba(109, 60, 255, 0)",
+                  "0 0 0 8px rgba(109, 60, 255, 0.2)",
+                  "0 0 0 0 rgba(109, 60, 255, 0)"
+                ]
               }}
-              className="relative group"
-              aria-label={`Scroll to ${card.title}`}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop"
+              }}
+            />
+            <span className="text-[#C9C3E0] text-lg font-medium">What We Offer</span>
+          </div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6"
+          >
+            Tailored Digital Solutions <br />to Fuel <span className="text-[#6D3CFF]">Your Success</span>
+          </motion.h2>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-[#C9C3E0] text-lg leading-8 mt-4 max-w-xl mb-8"
+          >
+            At Apptage, we bring strategy, design, and technology together to craft solutions that deliver measurable impact. Whether you're scaling your business, launching a new product, or optimizing existing systems, we provide custom solutions built to grow with your business.
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="relative inline-block"
+          >
+            <button 
+              type="button" 
+              className="border rounded-lg max-w-max font-semibold cursor-pointer transition-all duration-300 ease-in-out bg-[#6D3CFF] text-white border-[#6D3CFF] hover:bg-[#1A1238] hover:border-[#1A1238] text-sm sm:text-md py-3 px-6 sm:px-8 md:px-10 lg:px-12 hover:scale-105 active:scale-95"
             >
-              <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                activeCard === card.id 
-                  ? 'bg-[#6D3CFF] scale-125' 
-                  : 'bg-gray-300 group-hover:bg-[#6D3CFF]'
-              }`} />
-              <div className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="text-xs font-medium text-gray-600 whitespace-nowrap">
-                  {card.title.split(" ")[0]}
-                </div>
-              </div>
+              Book A Call
             </button>
+          </motion.div>
+        </div>
+
+        {/* Right Column - Cards with Independent Scroll */}
+        <div 
+          ref={rightColumnRef}
+          className="relative space-y-10 xl:h-[80vh] xl:overflow-y-auto p-2"
+          style={{
+            scrollBehavior: "smooth",
+            WebkitOverflowScrolling: "touch",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none"
+          }}
+        >
+          {cards.map((card, index) => (
+            <motion.div
+              key={card.id}
+              ref={el => cardsRef.current[index] = el}
+              onClick={() => scrollToCard(index)}
+              className={`bg-[#2F2F2F] rounded-2xl p-8 duration-300 ease-in-out my-20 hover:bg-[#3a3939] cursor-pointer transition-all ${
+                activeCard === card.id ? 'ring-2 ring-[#6D3CFF] ring-opacity-50 scale-[1.02]' : ''
+              }`}
+              style={{
+                y: cardYTransforms[index],
+                transition: isScrolling ? "none" : "all 0.3s ease-in-out"
+              }}
+              whileHover={{ 
+                y: -5,
+                scale: 1.01,
+                transition: { duration: 0.2 }
+              }}
+              whileTap={{ scale: 0.99 }}
+            >
+              <div className="space-y-8">
+                {/* Card Header */}
+                <div className="flex items-center gap-4">
+                  <motion.div 
+                    className="w-12 h-12 bg-[#5A7AF7] rounded-full flex items-center justify-center"
+                    whileHover={{ rotate: 5, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="text-white text-lg font-bold">
+                      {card.title.charAt(0)}
+                    </div>
+                  </motion.div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">{card.title}</h3>
+                </div>
+
+                {/* Card Description */}
+                <motion.p 
+                  className="text-[#C9C3E0] leading-8 text-lg max-w-xl font-medium"
+                  whileHover={{ color: "#FFFFFF" }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {card.description}
+                </motion.p>
+
+                {/* Features Grid */}
+                <div className={`grid grid-cols-1 ${card.features.length > 2 ? 'sm:grid-cols-2' : ''} gap-4`}>
+                  {card.features.map((feature, idx) => (
+                    <motion.div 
+                      key={idx} 
+                      className="flex items-center gap-2"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                    >
+                      <motion.div 
+                        className="w-2 h-2 bg-gray-400 rounded-full"
+                        whileHover={{ scale: 1.5, backgroundColor: "#6AF790" }}
+                      />
+                      <a href="/">
+                        <motion.span 
+                          className="text-[#C9C3E0] inline-block transition-transform duration-300 ease-in-out hover:translate-x-1 hover:text-[#6AF790]"
+                          whileHover={{ x: 5 }}
+                        >
+                          {feature}
+                        </motion.span>
+                      </a>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Card Buttons */}
+                <motion.div 
+                  className="flex flex-col sm:flex-row gap-4 relative z-30"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <motion.button 
+                    className="bg-[#6D3CFF] hover:bg-[#1A1238] text-sm sm:text-base transition-all duration-500 ease-in-out text-white font-semibold px-8 py-3 w-fit rounded-lg capitalize flex items-center gap-2 hover:scale-105 active:scale-95"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {card.primaryButton}
+                  </motion.button>
+                  <motion.a 
+                    className="bg-transparent border border-[#6D3CFF] text-sm sm:text-base hover:border-[#1a1238] hover:bg-[#1a1238] transition-all duration-500 ease-in-out text-white font-semibold px-8 py-3 w-fit rounded-lg capitalize flex items-center gap-2 hover:scale-105 active:scale-95"
+                    href={card.secondaryLink}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {card.secondaryButton}
+                  </motion.a>
+                </motion.div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Custom CSS for smooth scrolling and hiding scrollbar */}
+      <style jsx>{`
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+        }
+        
+        /* Smooth scrolling for the entire page */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* Smooth scroll container */
+        .scroll-container {
+          scroll-behavior: smooth;
+          transition: scroll-top 0.3s ease;
+        }
+        
+        /* Prevent overscroll glow on mobile */
+        body {
+          overscroll-behavior: none;
+        }
+        
+        /* Custom scrollbar styling - hidden */
+        .scroll-container::-webkit-scrollbar {
+          width: 0px;
+          background: transparent;
+        }
+        
+        .scroll-container::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb {
+          background: transparent;
+        }
+        
+        /* Smooth transitions for transform properties */
+        * {
+          scroll-behavior: smooth;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            scroll-behavior: auto;
+          }
+        }
+      `}</style>
     </section>
   );
 }
