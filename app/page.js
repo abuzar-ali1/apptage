@@ -1,5 +1,6 @@
 import AboutSection from "@/Components/AboutSection";
 import Hero from "@/Components/Hero";
+import IndustriesSection from "@/Components/IndustriesSection";
 import PartnersMarquee from "@/Components/PartnersMarquee";
 import WhatWeOffer from "@/Components/WhatWeOffer";
 
@@ -10,6 +11,7 @@ export default function Home() {
     <PartnersMarquee/>
     <AboutSection/>   
     <WhatWeOffer/>
+    <IndustriesSection/>
      </>
   );
 }
