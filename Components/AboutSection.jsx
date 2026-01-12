@@ -2,24 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export default function AboutSection() {
-  const stats = [
-    {
-      id: 1,
-      value: "100+",
-      label: "Creative Experts",
-    },
-    {
-      id: 2,
-      value: "500+",
-      label: "Success Stories",
-    },
-    {
-      id: 3,
-      value: "95%",
-      label: "Success Rate",
-    },
-  ];
+export default function AboutSection( {stats , aboutImg} ) {
+ 
 
   const container = {
     hidden: { opacity: 0, y: -12 },
@@ -176,7 +160,7 @@ export default function AboutSection() {
 
                 <div className="max-w-7xl mx-auto mt-5">
                   <div className="flex items-center justify-around">
-                    {stats.map((item, idx) => (
+                    {stats ? stats.map((item, idx) => (
                       <div className="flex flex-col" key={item.label ?? idx}>
                         <motion.h1
                           initial={{ scale: 0.8, opacity: 0 }}
@@ -193,7 +177,7 @@ export default function AboutSection() {
                           {item.label}
                         </div>
                       </div>
-                    ))}
+                    )) : " "}
                   </div>
                 </div>
               </motion.div>
@@ -214,7 +198,7 @@ export default function AboutSection() {
                   >
                     {/* Main laptop image */}
                     <motion.img
-                      src="./images/laptop.webp"
+                      src={aboutImg ? "./images/laptop-code.webp" : "./images/laptop.webp"}
                       alt="Digital solutions illustration"
                       className="hidden md:block w-full max-w-[500px] lg:max-w-[700px] xl:max-w-[900px] transform-gpu drop-shadow-2xl"
                       style={{
