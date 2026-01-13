@@ -8,6 +8,7 @@ import TechnologiesSection from "@/Components/Technologies";
 import ReviewsMarquee from "@/Components/ReviewsMarquee";
 import ProcessSection from "@/Components/ProcessSection";
 import CaseStudiesSection from "@/Components/CaseStudyCard";
+import ContactSection from "@/Components/ContactSection";
 export default function Home() {
    const stats = [
     {
@@ -40,6 +41,7 @@ export default function Home() {
     <ReviewsMarquee/>
     <ProcessSection/>
     <CaseStudiesSection/>
+    <ContactSection/>
      </>
   );
 }
