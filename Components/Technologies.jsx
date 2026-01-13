@@ -16,7 +16,7 @@ const techData = [
       },
       {
         name: "Android",
-        techs: ["Kotline", "Mvvm", "Java", "Rxjava", "Retrofit", "Jetpack"]
+        techs: ["Kotline", "Mvvm", "Java", "Rx java", "Retrofit", "Jetpack"]
       }
     ]
   },
@@ -28,7 +28,7 @@ const techData = [
     groups: [
       {
         name: "Frontend",
-        techs: ["React.js", "Next.js", "Vue.js", "TypeScript", "HTML", "CSS", "JavaScript", "Redux", "GraphQI", "Apolo"]
+        techs: ["React.js", "Next.js", "Vue.js", "TypeScript", "HTML", "CSS", "JavaScript", "Redux", "GraphQI", "Apollo"]
       },
       {
         name: "Backend",
@@ -48,11 +48,11 @@ const techData = [
     groups: [
       {
         name: "React",
-        techs: ["Redux", "Mobx", "Ionic", "RxJS", "Redux Thunk"]
+        techs: ["Redux", "Mobx", "RxjS", "Redux Thunk"]
       },
       {
         name: "Flutter",
-        techs: ["Bloc", "Dart", "MVM", "Rx Dart"]
+        techs: ["Block", "Dart", "MVM", "Rx dart"]
       }
     ]
   },
@@ -96,16 +96,13 @@ const techData = [
       },
       {
         name: "Platforms",
-        techs: ["Appium", "Azure", "Rackspace", "Linode", "Firebase", "Oracle Cloud", "Heroku"]
+        techs: ["Appium", "Azure", "Rackspace", "Linode", "Firebase", "Oracle", "Heroku"]
       }
     ]
   }
 ];
 
-// --- Helper Function to Generate Image Path ---
 const getTechImage = (techName) => {
-  // 1. Convert to Lowercase
-  // 2. Replace all spaces with hyphens (-)
   const formattedName = techName.toLowerCase().split(' ').join('-');
   return `/images/technologies/${formattedName}.webp`;
 };
