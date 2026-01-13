@@ -134,7 +134,7 @@ export default function TechnologiesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-6 leading-tight"
+            className="text-4xl md:text-5xl font-medium text-[#1A1A1A] mb-6 leading-tight"
           >
             Harness the Power of{" "}
             <span className="text-[#5932EE]">the Best</span> Technologies
@@ -145,7 +145,7 @@ export default function TechnologiesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-600 text-lg leading-relaxed max-w-3xl"
+            className="text-gray-600 text-lg max-w-screen"
           >
             Our team at Apptage uses a combination of{" "}
             <strong>cutting-edge technologies</strong> to create powerful,

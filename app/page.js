@@ -6,6 +6,7 @@ import WhatWeOffer from "@/Components/WhatWeOffer";
 import aboutImg from './../public/images/laptop-code.webp';
 import TechnologiesSection from "@/Components/Technologies";
 import ReviewsMarquee from "@/Components/ReviewsMarquee";
+import ProcessSection from "@/Components/ProcessSection";
 export default function Home() {
    const stats = [
     {
@@ -36,6 +37,7 @@ export default function Home() {
     <AboutSection aboutImg={aboutImg} />   
     <TechnologiesSection/>
     <ReviewsMarquee/>
+    <ProcessSection/>
      </>
   );
 }

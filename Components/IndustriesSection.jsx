@@ -65,7 +65,7 @@ export default function IndustriesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1A1A1A] mb-8 tracking-tight"
+            className="text-xl md:text-5xl lg:text-4xl font-medium text-[#1A1A1A] mb-8"
           >
             Our Expertise Across <span className="text-[#6D3CFF]">Multiple</span> Industries
           </motion.h2>
