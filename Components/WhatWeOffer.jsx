@@ -48,7 +48,7 @@ const cards = [
 
 export default function WhatWeOffer() {
   return (
-    <section className="bg-[#18181b] min-h-screen w-full relative font-sans">
+    <section className="bg-[#242424] min-h-screen w-full relative font-sans">
       <div className="container mx-auto px-6 py-24">
         {/* items-start is important here. It ensures the flex container 
           doesn't force the left column to stretch awkwardly, allowing 'sticky' to work relative to the viewport.

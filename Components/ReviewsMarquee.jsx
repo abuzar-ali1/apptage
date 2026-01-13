@@ -80,9 +80,8 @@ export default function ReviewsMarquee() {
         await animate(
           scope.current,
           { x: -(cardWidth * (i + 1)) },
-          { duration: 0.1, ease: "easeInOut" }
+          { duration: 2.1, ease: "easeInOut" }
         );
-
     
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
@@ -98,7 +97,7 @@ export default function ReviewsMarquee() {
   }, [animate, scope, isMobile]);
 
   return (
-    <section className="bg-[#18181b] py-20 overflow-hidden relative font-sans">
+    <section className="bg-[#242424] py-20 overflow-hidden relative">
       <div className="container mx-auto px-6 mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -107,7 +106,7 @@ export default function ReviewsMarquee() {
           className="flex items-center gap-3 mb-6"
         >
           <span className="w-2.5 h-2.5 rounded-full bg-[#6D3CFF] shadow-[0_0_12px_rgba(109,60,255,0.5)]"></span>
-          <span className="text-[#C9C3E0] font-medium tracking-wide">
+          <span className="text-[#C9C3E0] text-xl font-bold tracking-wide">
             Awards & Recognition
           </span>
         </motion.div>
@@ -157,7 +156,7 @@ function MarqueeCard({ review }) {
         </div>
       </div>
 
-      <p className="text-gray-400 leading-relaxed text-[15px]">
+      <p className="text-gray-400 leading-relaxed text-[17px]">
         {review.text}
       </p>
     </div>
