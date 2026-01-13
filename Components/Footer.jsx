@@ -2,13 +2,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { 
-  Phone, Mail, Facebook, Instagram, 
-  MapPin, ArrowRight 
+  Phone, 
+  Mail, 
+  Facebook, 
+  Instagram, 
+  ChevronRight,
+  MapPin 
 } from "lucide-react";
-import Link from "next/link";
+import Link from "next/link"; // Or use standard <a href> if not using Next.js
 
-export default function Footer() {
-  // Animation Variants
+const Footer = () => {
+  // --- Animation Variants ---
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -19,215 +23,221 @@ export default function Footer() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
   return (
-    <footer className="bg-[#0D0D0F] text-white pt-20 pb-10 border-t border-white/5 font-sans overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-12 xl:px-16">
+    <footer className="bg-[#131313] text-white pt-20 lg:pt-32 pb-8 lg:pb-12 overflow-hidden">
+      <div className="container mx-auto px-4 lg:px-8">
         
-        {/* --- TOP SECTION: Links Grid --- */}
+        {/* === MAIN LINKS GRID === */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-16"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-6 mb-12"
         >
           {/* Column 1: Development */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <FooterHeading title="Development" />
-            <ul className="space-y-4">
-              {['Cross Platform Apps', 'Native Mobile Apps', 'Emerging Technologies', 'Web Development', 'Artificial Intelligence', 'Custom Software Development'].map((item) => (
-                <li key={item}>
-                  <FooterLink href="#">{item}</FooterLink>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          <div className="space-y-6">
+            <FooterHeader title="Development" />
+            <div className="space-y-3 lg:space-y-4">
+              <FooterLink href="#">Cross Platform Apps</FooterLink>
+              <FooterLink href="#">Native Mobile Apps</FooterLink>
+              <FooterLink href="#">Emerging Technologies</FooterLink>
+              <FooterLink href="#">Web Development</FooterLink>
+              <FooterLink href="#">Artificial Intelligence</FooterLink>
+              <FooterLink href="#">Custom Software</FooterLink>
+            </div>
+          </div>
 
           {/* Column 2: Advisory & Design */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <FooterHeading title="Advisory & Design" />
-            <ul className="space-y-4">
-              {['Advisory', 'Design', 'Branding', 'UI UX Design', 'Product Design'].map((item) => (
-                <li key={item}>
-                  <FooterLink href="#">{item}</FooterLink>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          <div className="space-y-6">
+            <FooterHeader title="Advisory & Design" />
+            <div className="space-y-3 lg:space-y-4">
+              <FooterLink href="#">Advisory</FooterLink>
+              <FooterLink href="#">Design</FooterLink>
+              <FooterLink href="#">Branding</FooterLink>
+              <FooterLink href="#">UI UX Design</FooterLink>
+              <FooterLink href="#">Product Design</FooterLink>
+            </div>
+          </div>
 
           {/* Column 3: Ecommerce */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <FooterHeading title="Ecommerce" />
-            <ul className="space-y-4">
-              {['Shopify', 'Bigcommerce', 'Magento', 'WooCommerce', 'Custom Ecommerce'].map((item) => (
-                <li key={item}>
-                  <FooterLink href="#">{item}</FooterLink>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          <div className="space-y-6">
+            <FooterHeader title="Ecommerce" />
+            <div className="space-y-3 lg:space-y-4">
+              <FooterLink href="#">Shopify</FooterLink>
+              <FooterLink href="#">Bigcommerce</FooterLink>
+              <FooterLink href="#">Magento</FooterLink>
+              <FooterLink href="#">WooCommerce</FooterLink>
+              <FooterLink href="#">Custom Ecommerce</FooterLink>
+            </div>
+          </div>
 
           {/* Column 4: Data & Cloud */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <FooterHeading title="Data & Cloud" />
-            <ul className="space-y-4">
-              {['Cloud Consulting', 'Data Analytics', 'Data Strategy', 'Cloud Migration'].map((item) => (
-                <li key={item}>
-                  <FooterLink href="#">{item}</FooterLink>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Column 5: Insights (Buttons) */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <FooterHeading title="Insights" />
-            <div className="flex flex-col items-start gap-4">
-              <motion.button 
-                whileHover={{ scale: 1.05, backgroundColor: "#1e1e24" }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-2.5 rounded-full border border-white/20 text-gray-300 hover:text-white hover:border-white/40 transition-all text-sm font-medium bg-[#161618]"
-              >
-                Case Study
-              </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.05, backgroundColor: "#1e1e24" }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-2.5 rounded-full border border-white/20 text-gray-300 hover:text-white hover:border-white/40 transition-all text-sm font-medium bg-[#161618]"
-              >
-                About Us
-              </motion.button>
+          <div className="space-y-6">
+            <FooterHeader title="Data & Cloud" />
+            <div className="space-y-3 lg:space-y-4">
+              <FooterLink href="#">Cloud Consulting</FooterLink>
+              <FooterLink href="#">Data Analytics</FooterLink>
+              <FooterLink href="#">Data Strategy</FooterLink>
+              <FooterLink href="#">Cloud Migration</FooterLink>
             </div>
-          </motion.div>
+          </div>
+
+          {/* Column 5: Insights (Pills) */}
+          <div className="space-y-6 col-span-2 md:col-span-1 lg:col-span-1">
+            <FooterHeader title="Insights" />
+            <div className="space-y-4 flex flex-col items-start">
+              <PillButton href="#">Case Study</PillButton>
+              <PillButton href="#">About Us</PillButton>
+            </div>
+          </div>
         </motion.div>
 
 
-        {/* --- MIDDLE SECTION: Locations / Contact / Follow --- */}
+        {/* === MIDDLE SECTION: INFO & CONTACT === */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="border-y border-white/10 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-0"
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="md:flex gap-10 items-stretch border-t border-gray-800 py-10"
         >
-          
-          {/* 1. Locations */}
-          <div className="lg:pr-10">
-            <FooterHeading title="Locations" />
-            <p className="text-gray-400 mt-4 leading-relaxed max-w-xs">
-              11658 S. Copper Sky Dr, South Jordan, UT, 84009, USA
-            </p>
-          </div>
-
-          {/* 2. Contact Us (Bordered Middle) */}
-          <div className="lg:border-x border-white/10 lg:px-10 flex flex-col justify-start">
-            <FooterHeading title="Contact Us" />
-            <div className="flex flex-col sm:flex-row gap-6 mt-6">
-              {/* Phone */}
-              <a href="tel:855-605-8389" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#6D3CFF] group-hover:border-[#6D3CFF] transition-all duration-300">
-                  <Phone className="w-4 h-4 text-gray-300 group-hover:text-white" />
-                </div>
-                <span className="text-gray-300 group-hover:text-white transition-colors">855–605–8389</span>
-              </a>
-              
-              {/* Email */}
-              <a href="mailto:letstalk@apptage.com" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#6D3CFF] group-hover:border-[#6D3CFF] transition-all duration-300">
-                  <Mail className="w-4 h-4 text-gray-300 group-hover:text-white" />
-                </div>
-                <span className="text-gray-300 group-hover:text-white transition-colors">letstalk@apptage.com</span>
-              </a>
+          {/* Location */}
+          <div className="space-y-4 flex-1">
+            <FooterHeader title="Locations" />
+            <div className="flex items-start space-x-2 text-[#C9C3E0]">
+              <p className="max-w-[250px] leading-relaxed">
+                11658 S. Copper Sky Dr, South Jordan, UT, 84009, USA
+              </p>
             </div>
           </div>
 
-          {/* 3. Follow Us */}
-          <div className="lg:pl-10">
-            <FooterHeading title="Follow Us" />
-            <div className="flex gap-4 mt-6">
-              <SocialIcon icon={<Facebook className="w-5 h-5" />} />
-              <SocialIcon icon={<Instagram className="w-5 h-5" />} />
+          {/* Contact Us (Bordered Middle) */}
+          <div className="flex-1 space-y-4 mt-8 md:mt-0 md:px-8 md:border-l md:border-r border-gray-800">
+            <FooterHeader title="Contact Us" />
+            <div className="flex flex-col xl:flex-row gap-6">
+              <ContactItem icon={<Phone size={18} />} text="855-605-8389" href="tel:855-605-8389" />
+              <ContactItem icon={<Mail size={18} />} text="letstalk@apptage.com" href="mailto:letstalk@apptage.com" />
+            </div>
+          </div>
+
+          {/* Follow Us */}
+          <div className="space-y-4 mt-8 md:mt-0 flex-1 md:flex md:flex-col md:items-center">
+            <div className="w-full md:w-auto">
+              <FooterHeader title="Follow Us" />
+              <div className="flex items-center gap-3 mt-4">
+                <SocialButton href="https://facebook.com" icon={<Facebook size={20} />} />
+                <SocialButton href="https://instagram.com" icon={<Instagram size={20} />} />
+              </div>
             </div>
           </div>
         </motion.div>
 
 
-        {/* --- BOTTOM SECTION: Copyright & Payments --- */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="pt-10 flex flex-col-reverse lg:flex-row justify-between items-center gap-8 lg:gap-0"
-        >
-          {/* Copyright */}
-          <div className="text-gray-500 text-sm">
-            © 2026 Apptage. All Rights Reserved.
+        {/* === BOTTOM SECTION: COPYRIGHT & LINKS === */}
+        <div className="border-t border-gray-800 pt-8 mt-4">
+          
+          {/* Desktop Inline Links */}
+          <div className="hidden lg:flex justify-end mb-6">
+            <ul className="flex items-center space-x-8">
+              <li><FooterLink href="/contact" small>Contact Us</FooterLink></li>
+              <li><FooterLink href="/industries" small>Industries</FooterLink></li>
+              <li><FooterLink href="/privacy" small>Privacy Policy</FooterLink></li>
+              <li><FooterLink href="/terms" small>Terms and Conditions</FooterLink></li>
+            </ul>
           </div>
 
-          {/* Right Side: Links & Payments */}
-          <div className="flex flex-col items-center lg:items-end gap-6">
-            
-            {/* Horizontal Links */}
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
-              <Link href="#" className="hover:text-white transition-colors">Contact Us</Link>
-              <Link href="#" className="hover:text-white transition-colors">Industries</Link>
-              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-white transition-colors">Terms and Conditions</Link>
-            </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-[#C9C3E0] text-sm md:text-md text-center md:text-left">
+              © 2026 Apptage. All Rights Reserved.
+            </p>
 
             {/* Payment Methods */}
-            <div className="flex items-center gap-3 flex-wrap justify-center">
-              <span className="text-sm text-gray-500 mr-2">Acceptable Payment Methods:</span>
-              {/* Placeholder Images for Payment Logos */}
-              {['visa', 'apple', 'amex', 'paypal', 'wise', 'zelle', 'mastercard'].map((pay, i) => (
-                <div key={i} className="h-6 bg-white/10 rounded px-1 flex items-center justify-center">
-                   {/* Replace this img with your actual assets */}
-                   {/* <img src={`/images/payments/${pay}.png`} alt={pay} className="h-4 w-auto" /> */}
-                   
-                   {/* Temporary Text Placeholder to show layout */}
-                   <span className="text-[10px] uppercase font-bold text-white/50 px-1">{pay}</span>
-                </div>
-              ))}
+            <div className="hidden lg:flex items-center space-x-4">
+              <span className="text-[#C9C3E0] text-sm">Acceptable Payment Methods:</span>
+              <div className="flex gap-2">
+                {/* Replaced img tags with simple divs for demonstration. 
+                    Uncomment img tags and add your src paths to use real images. */}
+                {['Visa', 'Pay', 'Amex', 'PayPal', 'Wise', 'Zelle'].map((pm) => (
+                   <div key={pm} className="h-8 px-2 bg-white/10 rounded flex items-center justify-center min-w-[40px]">
+                      {/* <img src={`/img/footer/${pm.toLowerCase()}.webp`} alt={pm} className="h-full w-auto object-contain" /> */}
+                      <span className="text-[10px] uppercase font-bold text-gray-400">{pm}</span>
+                   </div>
+                ))}
+              </div>
             </div>
-
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </footer>
   );
-}
+};
 
-// --- Helper Components ---
+// ============================================
+// SUB-COMPONENTS for Clean Code & Reusability
+// ============================================
 
-function FooterHeading({ title }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span className="w-2 h-2 rounded-full bg-[#6D3CFF]"></span>
-      <h4 className="text-white font-semibold text-lg">{title}</h4>
-    </div>
-  );
-}
+// 1. Section Header with Dot
+const FooterHeader = ({ title }) => (
+  <div className="flex items-center space-x-3">
+    <div className="w-2 h-2 bg-[#6A35FF] rounded-full"></div>
+    <h3 className="text-white font-semibold text-lg tracking-wide">{title}</h3>
+  </div>
+);
 
-function FooterLink({ href, children }) {
-  return (
-    <Link href={href} className="text-gray-400 hover:text-[#6D3CFF] hover:pl-2 transition-all duration-300 text-[15px] block">
-      {children}
-    </Link>
-  );
-}
+// 2. Animated Link with Slide-in Arrow
+const FooterLink = ({ href, children, small = false }) => (
+  <Link 
+    href={href} 
+    className={`
+      group flex items-center gap-2 overflow-hidden text-[#C9C3E0] hover:text-white transition-colors duration-300
+      ${small ? 'text-xs lg:text-sm' : 'text-sm lg:text-[15px]'}
+    `}
+  >
+    {/* The Arrow: negative margin pulls it out, hover brings it in */}
+    <span className="-ml-5 group-hover:ml-0 transition-all duration-300 ease-in-out text-[#6A35FF]">
+      <ChevronRight size={16} strokeWidth={3} />
+    </span>
+    <span>{children}</span>
+  </Link>
+);
 
-function SocialIcon({ icon }) {
-  return (
-    <a 
-      href="#" 
-      className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:bg-[#6D3CFF] hover:border-[#6D3CFF] hover:text-white transition-all duration-300"
-    >
+// 3. Pill Button (Insights)
+const PillButton = ({ href, children }) => (
+  <Link href={href} className="px-5 py-2 rounded-full bg-[#1F1F1F] text-[#C9C3E0] text-sm hover:text-white hover:bg-[#2a2a2a] transition-all duration-300 flex items-center gap-2 group">
+     <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300">
+        <ChevronRight size={14} />
+     </span>
+     {children}
+  </Link>
+);
+
+// 4. Contact Info Item
+const ContactItem = ({ icon, text, href }) => (
+  <a href={href} className="flex items-center space-x-3 group">
+    <div className="border border-[#6A35FF] rounded-full p-2.5 text-white group-hover:bg-[#6A35FF] transition-all duration-300">
       {icon}
-    </a>
-  );
-}
+    </div>
+    <span className="text-[#C9C3E0] group-hover:text-white transition-colors duration-300 text-sm xl:text-md">
+      {text}
+    </span>
+  </a>
+);
+
+// 5. Social Media Icon Button
+const SocialButton = ({ href, icon }) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noreferrer"
+    className="border border-[#6A35FF] rounded-full p-2.5 text-white hover:bg-[#6A35FF] hover:-translate-y-1 transition-all duration-300"
+  >
+    {icon}
+  </a>
+);
+
+export default Footer;
