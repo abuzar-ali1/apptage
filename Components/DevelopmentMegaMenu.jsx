@@ -19,11 +19,9 @@ const DevelopmentMegaMenu = ({
   const menuRef = useRef(null);
   const [activeAccordion, setActiveAccordion] = useState(null);
 
-  // Handle click outside to close
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        // Check if click is not on the anchor element
         if (anchorRef && anchorRef.current && !anchorRef.current.contains(event.target)) {
           onClose();
         }
